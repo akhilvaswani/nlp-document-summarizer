@@ -1,10 +1,10 @@
 # NLP Document Summarizer
 
-This project is a document summarization tool I built using Hugging Face's transformers library. It takes long text documents and generates concise summaries using a pretrained BART model (facebook/bart-large-cnn). The tricky part with summarization is handling documents that are longer than the model's token limit, so I built a chunking system that splits long documents into overlapping segments, summarizes each one, and then combines them into a final coherent summary.
+Document summarization tool I built using Hugging Face's transformers library. It takes long text documents and generates concise summaries using a pretrained BART model (facebook/bart-large-cnn). The tricky part with summarization is handling documents that are longer than the model's token limit, so I built a chunking system that splits long documents into overlapping segments, summarizes each one, and then combines them into a final coherent summary.
 
 I also wrapped the whole thing in a Flask API so it can be used as a microservice, and added a batch processing mode for summarizing multiple documents at once.
 
-## What's in This Repo
+## Files
 
 - `summarizer.py` - Core summarization engine with chunking and multi-pass summarization
 - `api.py` - Flask REST API for the summarizer
@@ -219,4 +219,4 @@ You can adjust the model and summarization parameters in `config.py`:
 
 ## What I Learned
 
-The biggest challenge was getting the chunking right. My first attempt just split on sentence count, which sometimes produced chunks of wildly different sizes. Switching to token-based chunking with overlap made a huge difference in summary quality. I also learned that recursive summarization (summarizing the summaries when they're still too long) works surprisingly well and produces more coherent results than just concatenating chunk summaries. The Flask API was pretty straightforward, but it taught me the importance of proper error handling and input validation when building ML-powered services.
+The biggest challenge was getting the chunking right. My first attempt just split on sentence count, which sometimes produced chunks of wildly different sizes. Switching to token-based chunking with overlap made a huge difference in summary quality. I also learned that recursive summarization (summarizing the summaries when they're still too long) works surprisingly well and produces more coherent results than just concatenating chunk summaries. The Flask API was pretty straightforward, but it was a good reminder to handle errors properly and validate inputs before passing anything to the model.
